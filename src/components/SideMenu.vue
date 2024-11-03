@@ -28,7 +28,7 @@
                             <td>{{ item.item }}</td>
                             <td>${{ item.price }}.00</td>
                             <td class="center">{{ item.qty }}</td>
-                            <td>${{ item.price * item.qty }}.00</td>
+                            <td>${{ (item.price * item.qty).toFixed(2) }}</td>
                             <td class="center">
                                 <button class="btn btn-light cart-remove">
                                     &times;
@@ -40,7 +40,7 @@
 
                 <p class="center"><em>No items in cart</em></p>
                 <div class="spread">
-                    <span><strong>Total:</strong> $1.00</span>
+                    <span><strong>Total:</strong> ${{ totalPrice.toFixed(2) }}</span>
                     <button class="btn btn-light">Checkout</button>
                 </div>
             </div>
@@ -62,6 +62,13 @@ export default {
                     result.push({ item: element.item, price: element.price, qty: element.qty})
             });
             return (result);
+        },
+        totalPrice() {
+            let result = 0;
+            this.cart.forEach((element, index) => {
+                result += (element.price * element.qty);
+            });
+            return result;
         }
     }
 }

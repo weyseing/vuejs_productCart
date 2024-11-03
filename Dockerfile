@@ -1,6 +1,6 @@
 FROM node:16
 
-# install package 
+# install package
 RUN apt update 
 RUN apt install -y nginx
 

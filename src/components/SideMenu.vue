@@ -1,12 +1,12 @@
 <template>
-    <aside class="cart-container">
+    <aside class="cart-container" v-if="showSidebar">
         <div class="cart">
             <h1 class="cart-title spread">
                 <span>
                     Cart
                     <i class="icofont-cart-alt icofont-1x"></i>
                 </span>
-                <button class="cart-close">&times;</button>
+                <button class="cart-close" @click="toggleSideBar()">&times;</button>
             </h1>
 
             <div class="cart-body">
@@ -22,12 +22,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr v-for="(item, index) in cart_removed_zero" :key="index">
+                            <td>{{ index + 1 }}.</td>
                             <td><i class="icofont-carrot icofont-3x"></i></td>
-                            <td>Carrot</td>
-                            <td>$1.00</td>
-                            <td class="center">1</td>
-                            <td>$1.00</td>
+                            <td>{{ item.item }}</td>
+                            <td>${{ item.price }}.00</td>
+                            <td class="center">{{ item.qty }}</td>
+                            <td>${{ item.price * item.qty }}.00</td>
                             <td class="center">
                                 <button class="btn btn-light cart-remove">
                                     &times;
@@ -45,10 +46,23 @@
             </div>
         </div>
     </aside>
+
 </template>
 
 <script>
 export default {
-
+    props: ["showSidebar", "toggleSideBar", "cart"],
+    methods: {
+    },
+    computed: {
+        cart_removed_zero() {
+            let result = [];
+            this.cart.forEach((element, index) => {
+                if (element.qty > 0) 
+                    result.push({ item: element.item, price: element.price, qty: element.qty})
+            });
+            return (result);
+        }
+    }
 }
 </script>

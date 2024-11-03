@@ -1,4 +1,12 @@
 <template>
+    <TopMenu v-model:showSidebar="showSidebar" :toggleSideBar="toggleSideBar"/>
+
+    <div class="splash-container">
+        <div class="splash">
+            <h1>Splendid Food</h1>
+        </div>
+    </div>
+
     <main class="wrapper">
         <h2>Recommended</h2>
 
@@ -109,36 +117,45 @@
         </div>
     </main>
 
-    <SideMenu/>
+    <SideMenu v-model:showSidebar="showSidebar"  :toggleSideBar="toggleSideBar" :cart="cart"/>
+
+    <footer></footer>
 </template>
 
 <script>
 import SideMenu from '../src/components/SideMenu.vue';
+import TopMenu from '../src/components/TopMenu.vue';
 
 export default {
     data() {
         return {
             inventory: {
-                carrots: 100,
-                pineapples: 200,
-                cherries: 300
+                carrots: 1,
+                pineapples: 1,
+                cherries: 1
             },
-            cart: {
-                carrots: 0,
-                pineapples: 0,
-                cherries: 0
-            },
+            cart: [
+                {item: 'carrots', price: 1, qty: 0},
+                {item: 'pineapples', price: 2, qty: 0},
+                {item: 'cherries', price: 3, qty: 0},
+            ],
+            showSidebar: false,
         }
     },
 
     components: {
         SideMenu,
+        TopMenu,
     },
 
     methods: {
-        addToCart(type, quantity) {
-            this.cart[type] += this.inventory[type];
-            console.log(this.cart);
+        addToCart(type) {
+            const cartItem = this.cart.find(cartItem => cartItem.item === type);
+            cartItem.qty += this.inventory[type];
+        },
+        
+        toggleSideBar() {
+            this.showSidebar = !this.showSidebar;
         }
     },
 }

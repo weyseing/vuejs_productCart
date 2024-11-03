@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  vuejs:
+    container_name: vuejs
+    build: .
+    ports:
+      - "9545:8080"
+      - "9555:80"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env

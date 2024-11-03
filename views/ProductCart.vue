@@ -126,7 +126,7 @@ export default {
             cart: {
                 carrots: 0,
                 pineapples: 0,
-                cherries: 0 
+                cherries: 0
             },
         }
     },
